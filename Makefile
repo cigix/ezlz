@@ -12,10 +12,14 @@ unezlz: libez.a
 	$(MAKE) -C decompression unezlz EZLIBDIR=$(CURDIR)
 	cp decompression/unezlz $@
 
+check: ezlz unezlz
+	$(MAKE) -C tests check EZLZ=$(CURDIR)/ezlz UNEZLZ=$(CURDIR)/unezlz
+
 clean:
 	$(RM) libez.a ezlz unezlz
 	$(MAKE) -C lib clean
 	$(MAKE) -C compression clean
 	$(MAKE) -C decompression clean
+	$(MAKE) -C tests clean
 
 .PHONY: all clean

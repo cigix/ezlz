@@ -1,19 +1,21 @@
+override CFLAGS += -Wall -Wextra -Werror
+
 all: libez.a ezlz unezlz
 
 libez.a:
-	$(MAKE) -C lib libez.a
+	$(MAKE) -C lib libez.a CFLAGS="$(CFLAGS)"
 	cp lib/libez.a $@
 
 ezlz: libez.a
-	$(MAKE) -C compression ezlz EZLIBDIR=$(CURDIR)
+	$(MAKE) -C compression ezlz CFLAGS="$(CFLAGS)" EZLIBDIR="$(CURDIR)"
 	cp compression/ezlz $@
 
 unezlz: libez.a
-	$(MAKE) -C decompression unezlz EZLIBDIR=$(CURDIR)
+	$(MAKE) -C decompression unezlz CFLAGS="$(CFLAGS)" EZLIBDIR="$(CURDIR)"
 	cp decompression/unezlz $@
 
 check: ezlz unezlz
-	$(MAKE) -C tests check EZLZ=$(CURDIR)/ezlz UNEZLZ=$(CURDIR)/unezlz
+	$(MAKE) -C tests check EZLZ="$(CURDIR)/ezlz" UNEZLZ="$(CURDIR)/unezlz"
 
 clean:
 	$(RM) libez.a ezlz unezlz

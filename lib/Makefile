@@ -1,7 +1,9 @@
 ESCAPE ?= 0xAA
 
-SOURCES = lib.c
+SOURCES = dict.c bytes.c bits.c io.c
 OBJECTS = $(SOURCES:.c=.o)
+
+override CPPFLAGS += -DESCAPE=$(ESCAPE)
 
 all: libez.a
 

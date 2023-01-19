@@ -9,7 +9,7 @@ fi
 # Identity test: does decompression bring back the initial file
 
 mkdir -p inputs compressed outputs
-dd if=/dev/urandom of=inputs/08 bs=1K count=1K
+dd if=/dev/urandom of=inputs/08 bs=1K count=10 2>/dev/null
 
 "$EZLZ" <inputs/08 >compressed/08
 "$UNEZLZ" <compressed/08 >outputs/08

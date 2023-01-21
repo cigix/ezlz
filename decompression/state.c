@@ -18,9 +18,8 @@ struct state *init_state(void)
   return state;
 }
 
-void free_state(struct state *state, int outputfd)
+void free_state(struct state *state)
 {
-  write(outputfd, state->learning->bytes, state->learning->size);
   free_bytes(state->learning);
   free(state->inbits);
   free_dict(state->dict);

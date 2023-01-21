@@ -50,6 +50,8 @@ int read_bits(struct bits *bits, int inputfd)
   if (value == ((uint64_t)ESCAPE))
   {
     int nextvalue = bits->bits & mask;
+    bits->bits >>= bits->window;
+    bits->available -= bits->window;
     if (nextvalue != ((uint64_t)ESCAPE))
     {
       /* Single escape: increase window size */
@@ -58,8 +60,6 @@ int read_bits(struct bits *bits, int inputfd)
       return read_bits(bits, inputfd);
     }
     /* Double escape: one ESCAPE value */
-    bits->bits >>= bits->window;
-    bits->available -= bits->window;
   }
   return value;
 }

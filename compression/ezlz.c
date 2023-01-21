@@ -12,7 +12,7 @@ int main(int argc, char **argv)
   if (2 <= argc)
     inputfd = open(argv[1], O_RDONLY);
   if (3 <= argc)
-    outputfd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    outputfd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 
   if (inputfd < 0 || outputfd < 0 || compress(inputfd, outputfd) < 0)
   {

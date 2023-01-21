@@ -18,10 +18,12 @@ struct bits *init_bits(void)
 
 void append_bits(struct bits *bits, int value)
 {
-  if ((1 << bits->window) <= value)
+  while ((1 << bits->window) <= value)
   {
     /* Current window is not big enough, expand it. */
-    bits->bits |= ((uint64_t)ESCAPE) << bits->available;
+    bits->bits |= ((uint64_t)(uint8_t)ESCAPE) << bits->available;
+    bits->available += bits->window;
+    bits->bits |= ((uint64_t)(uint8_t)~ESCAPE) << bits->available;
     bits->available += bits->window;
     bits->window++;
   }

@@ -15,5 +15,5 @@ struct state
 /* Allocate a new struct state. Return NULL in case of error. */
 struct state *init_state(void);
 
-/* Flush the buffers to the output and free the struct state. */
-void free_state(struct state *, int outputfd);
+/* Free the struct state. */
+void free_state(struct state *);

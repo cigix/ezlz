@@ -8,7 +8,6 @@ struct state
 {
   struct dictionary *dict;
 
-  struct bytes *inbytes;
   struct bytes *learning;
   struct bits *outbits;
 };

@@ -2,8 +2,8 @@
 
 #include <unistd.h>
 
-#include "state.h"
 #include "lib/io.h"
+#include "state.h"
 
 void match_inbytes(struct state *state)
 {
@@ -27,7 +27,8 @@ int learn(struct state *state)
   if (code == -1)
   {
     /* The pattern was not found. Learn this pattern, shift by one byte. */
-    if (dict_add_entry(state->dict, state->learning) < 0)
+    if (dict_add_entry(
+          state->dict, state->learning->bytes, state->learning->size) < 0)
       return -1;
     shift_bytes(state->learning, 1);
   }
@@ -43,11 +44,8 @@ int compress(int inputfd, int outputfd)
 
   uint8_t byte;
   int ret;
-  while ((ret = read(inputfd, &byte, 1)) != 0)
+  while ((ret = read(inputfd, &byte, 1)) > 0)
   {
-    if (ret < 0)
-      return ret;
-
     if (append_byte(state->inbytes, byte) < 0
         || append_byte(state->learning, byte) < 0)
       return -1;
@@ -56,6 +54,8 @@ int compress(int inputfd, int outputfd)
       return -1;
     write_bits(state->outbits, outputfd);
   }
+  if (ret < 0)
+    return ret;
 
   free_state(state, outputfd);
   return 0;

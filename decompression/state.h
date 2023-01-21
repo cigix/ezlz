@@ -1,16 +1,15 @@
 #pragma once
 
+#include "lib/dict.h"
 #include "lib/bits.h"
 #include "lib/bytes.h"
-#include "lib/dict.h"
 
-struct state
+struct state 
 {
   struct dictionary *dict;
 
-  struct bytes *inbytes;
+  struct bits *inbits;
   struct bytes *learning;
-  struct bits *outbits;
 };
 
 /* Allocate a new struct state. Return NULL in case of error. */

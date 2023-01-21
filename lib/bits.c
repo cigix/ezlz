@@ -2,7 +2,6 @@
 
 #include <limits.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 struct bits *init_bits(void)
 {

@@ -20,5 +20,9 @@ void free_bytes(struct bytes *);
 ** case of error, 0 otherwise. */
 int append_byte(struct bytes *, uint8_t);
 
+/* Append multiple bytes at the end of the bytes. May reallocate. Return -1 in
+** case of error, 0 otherwise. */
+int append_bytes(struct bytes *, uint8_t const *, size_t);
+
 /* Drop the first n bytes, reducing the size of the bytes. */
 void shift_bytes(struct bytes *, size_t n);

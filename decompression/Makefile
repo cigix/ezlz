@@ -2,7 +2,7 @@ override CPPFLAGS += -I$(EZLIBDIR)
 override LDFLAGS += -L$(EZLIBDIR)
 override LDLIBS += -lez
 
-SOURCES = unezlz.c
+SOURCES = unezlz.c decompress.c state.c
 OBJECTS = $(SOURCES:.c=.o)
 
 all: unezlz

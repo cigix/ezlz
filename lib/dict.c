@@ -37,7 +37,7 @@ void free_dict(struct dictionary *dict)
   free(dict);
 }
 
-int dict_add_entry(struct dictionary *dict, const struct bytes *bytes)
+int dict_add_entry(struct dictionary *dict, uint8_t const *bytes, size_t size)
 {
   if (dict->size == dict->capacity)
   {
@@ -50,11 +50,11 @@ int dict_add_entry(struct dictionary *dict, const struct bytes *bytes)
 
   size_t i = dict->size++;
   struct dictionary_entry *entry = &dict->entries[i];
-  entry->bytes = malloc(bytes->size);
+  entry->bytes = malloc(size);
   if (!entry->bytes)
     return -1;
-  memcpy(entry->bytes, bytes->bytes, bytes->size);
-  entry->size = bytes->size;
+  memcpy(entry->bytes, bytes, size);
+  entry->size = size;
 
   return i;
 }
@@ -68,4 +68,11 @@ int dict_find(struct dictionary *dict, const uint8_t *bytes, size_t size)
       return i;
   }
   return -1;
+}
+
+struct dictionary_entry const *dict_get(struct dictionary *dict, size_t pos)
+{
+  if (dict->size <= pos)
+    return NULL;
+  return dict->entries + pos;
 }

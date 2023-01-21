@@ -40,6 +40,22 @@ int append_byte(struct bytes *bytes, uint8_t byte)
   return 0;
 }
 
+int append_bytes(struct bytes *bytes, uint8_t const *toadd, size_t size)
+{
+  if (bytes->capacity < bytes->size + size)
+  {
+    while (bytes->capacity < bytes->size + size)
+      bytes->capacity *= 2;
+    bytes->bytes = realloc(bytes->bytes, bytes->capacity);
+    if (!bytes->bytes)
+      return -1;
+  }
+
+  memcpy(bytes->bytes + bytes->size, toadd, size);
+  bytes->size += size;
+  return 0;
+}
+
 void shift_bytes(struct bytes *bytes, size_t n)
 {
   bytes->size -= n;

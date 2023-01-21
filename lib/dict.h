@@ -27,7 +27,10 @@ void free_dict(struct dictionary *);
 
 /* Add a new entry in the dict. May reallocate the existing entries. The bytes
 ** are duplicated. Return -1 in case of error, the position otherwise. */
-int dict_add_entry(struct dictionary *, const struct bytes *);
+int dict_add_entry(struct dictionary *, uint8_t const *, size_t);
 
 /* Get the position for a an entry, or -1 if no entries are found. */
 int dict_find(struct dictionary *, const uint8_t *, size_t);
+
+/* Get the entry for a position, or NULL if the entry does not exist. */
+struct dictionary_entry const *dict_get(struct dictionary *, size_t);

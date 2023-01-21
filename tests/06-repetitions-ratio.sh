@@ -13,6 +13,7 @@ echo "be you, be proud of you because you can be do what we want to do" > inputs
 
 "$EZLZ" <inputs/06 >compressed/06
 
-input_size=$(du inputs/06 | cut -f1)
-compressed_size=$(du inputs/06 | cut -f1)
+input_size=$(du -b inputs/06 | cut -f1)
+compressed_size=$(du -b compressed/06 | cut -f1)
+echo "$compressed_size < $input_size"
 [ "$compressed_size" -lt "$input_size" ]
